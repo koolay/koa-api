@@ -15,6 +15,7 @@ const app = new Koa()
 
 // Register middleware
 const loggerOptions = {
+    name: conf.get('appName'),
     level: conf.get('logLevel'),
     transport: conf.get('logTransport'),
     dsn: conf.get('logSentryDsn')
@@ -27,10 +28,11 @@ app
   .use(router())
 
 // sentry logging
-Raven.config('').install()
+Raven.config(conf.get('logSentryDsn')).install()
 app.on('error', err => {
-    console.log(err)
- //   Raven.captureException(err)
+    if (conf.get('logTransport') === 'sentry') {
+        Raven.captureException(err)
+    }
 })
 
 const port = conf.get('port')

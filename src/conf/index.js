@@ -10,7 +10,8 @@ const conf = convict({
         env: 'NODE_ENV'
     },
     appName: {
-        default: 'KoaAPP'
+        default: 'koa-api',
+        env: 'APP_NAME'
     },
     port: {
         doc: 'The port for http.',

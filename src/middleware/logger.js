@@ -10,19 +10,18 @@ const STATUS_COLORS = {
 }
 
 export default function (options) {
-    const category = options.category || 'console'
+    const transport = options.transport || 'console'
     const level = options.level || 'info'
     const sentryDsn = options.dsn || ''
     return async (ctx, next) => {
         const consoleTransport = new winston.transports.Console({level: level})
         const transports = [consoleTransport]
-        if (category == 'sentry') {
+        if (transport == 'sentry') {
             const sentryTransport = new Sentry({
                 patchGlobal: true,
                 level: level,
                 dsn: sentryDsn,
-                tags: { key: 'value' },
-                extra: { key: 'value' }
+                tags: { app: options.name || 'koa-api' }
             })
             transports.push(sentryTransport)
         }

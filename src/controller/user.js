@@ -1,7 +1,7 @@
 import { getUsers } from '../service/user'
 
 export const get = ctx => {
-    ctx.logger.error('test error log', { extra: 11 })
+    ctx.logger.log('error', 'test error log', { extra: 11 })
     ctx.body = { params: ctx.params, users: getUsers(), time: Date.now() }
 }
 
