@@ -4,6 +4,7 @@ import helmet from 'koa-helmet'
 import Raven from 'raven'
 import winston from 'winston'
 import logger from './middleware/logger'
+import requestId from './middleware/request-id'
 
 import errorMiddleware from './middleware/error'
 
@@ -21,6 +22,7 @@ const loggerOptions = {
     dsn: conf.get('logSentryDsn')
 }
 app
+  .use(requestId())
   .use(logger(loggerOptions))
   .use(errorMiddleware())
   .use(bodyParser())

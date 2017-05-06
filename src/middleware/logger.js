@@ -34,7 +34,13 @@ export default function (options) {
         const ms = new Date() - start
 
         let logLevel
-        if (ctx.status >= 500) { logLevel = 'error' } else if (ctx.status >= 400) { logLevel = 'warn' } else if (ctx.status >= 100) { logLevel = 'info' }
+        if (ctx.status >= 500) {
+            logLevel = 'error'
+        } else if (ctx.status >= 400) {
+            logLevel = 'warn'
+        } else if (ctx.status >= 100) {
+            logLevel = 'debug'
+        }
 
         let msg = (chalk.gray(`${ctx.method} ${ctx.originalUrl}`) +
                chalk[STATUS_COLORS[logLevel]](` ${ctx.status} `) +
