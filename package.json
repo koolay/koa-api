@@ -14,6 +14,7 @@
   "author": "Umayr Shahid <umayrr@hotmail.co.uk>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-core": "^6.18.2",
     "babel-preset-koa2-node7": "^0.1.0",
     "boom": "^4.2.0",

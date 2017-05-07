@@ -1,8 +1,10 @@
-import * as userService from '../service/userService'
+import { getUsers } from '../service/userService'
+import { getOAuthToken } from '../service/weixinService'
 
 export const get = async ctx => {
-    const users = await userService.getUsers(1)
-    ctx.body = { params: ctx.params, users: users, time: Date.now() }
+    const users = await getUsers(1)
+    const data = await getOAuthToken()
+    ctx.body = { data, params: ctx.params, users: users, time: Date.now() }
 }
 
 export const post = ctx => {
