@@ -37,8 +37,8 @@ const conf = convict({
         host: { env: 'DB_MASTER_HOST', default: '127.0.0.1' },
         user: { env: 'DB_MASTER_USER', default: 'root' },
         password: { env: 'DB_MASTER_PWD', default: 'dev' },
-        database: 'koa',
-        connectionLimit: 10
+        database: { env: 'DB_MASTER_DB', default: 'koa' },
+        connectionLimit: { env: 'DB_MASTER_POOL', default: 20 }
     }
 })
 conf.validate({ strict: true })
