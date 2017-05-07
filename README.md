@@ -23,6 +23,7 @@ koa2 api项目模板, 包含标准的配置,路由,异常处理项目结构等.
 │   ├── controller      # 控制器
 │   ├── middleware      # 中间件
 │   ├── route           # 路径
+│   ├── store           # 数据访问
 │   └── service         # 业务逻辑
 ├── .env.example        # 配置模板
 └── test                # unit tests
@@ -32,6 +33,7 @@ koa2 api项目模板, 包含标准的配置,路由,异常处理项目结构等.
 
 - [Koa](https://github.com/koajs/koa) Well, duh.
 - [Koa Router](https://github.com/alexmingoia/koa-router) For routing and all.
+- [node-mysql2](https://github.com/sidorares/node-mysql2) fast node-mysql compatible mysql driver for node.js
 - [Debug](https://github.com/visionmedia/debug) Debug messages in the development environment.
 - [Convict](https://github.com/mozilla/node-convict) Configuration management.
 - [dotenv](https://github.com/motdotla/dotenv)
@@ -50,3 +52,14 @@ koa2 api项目模板, 包含标准的配置,路由,异常处理项目结构等.
 - `npm run lint` - lints `src/` 目录下的所有文件
 - `npm run lint:fix` - fixes all the possible linting errors
 - `npm run watch` - 启动web服务,并监控源文件变化,reload
+
+### 生产环境运行
+
+- pm2
+
+```bash
+
+$ pm2 startup
+$ pm2 start ecosystem.json
+
+```

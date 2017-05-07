@@ -32,8 +32,14 @@ const conf = convict({
     logSentryDsn: {
         env: 'LOG_SENTRY_DSN',
         default: ''
+    },
+    masterDb: {
+        host: { env: 'DB_MASTER_HOST', default: '127.0.0.1' },
+        user: { env: 'DB_MASTER_USER', default: 'root' },
+        password: { env: 'DB_MASTER_PWD', default: 'dev' },
+        database: 'koa',
+        connectionLimit: 10
     }
-
 })
 conf.validate({ strict: true })
 
