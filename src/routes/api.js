@@ -1,15 +1,15 @@
 import Router from 'koa-router'
-import userRouter from './user'
+import jwt from 'koa-jwt'
+import conf from '../conf'
+import adminRouter from '../modules/admin/routes'
+import orderRouter from '../modules/order/routes'
 
-const apiRouter = new Router({
-    prefix: '/api'
-})
+const apiRouter = new Router()
+apiRouter.use(jwt({
+    secret: conf.get('jwtSecret'),
+    debug: conf.get('debug')
+}))
 
-const reg = function (router) {
-    apiRouter.use('', router.routes(), router.allowedMethods())
-}
-
-// register routes
-reg(userRouter)
-
+apiRouter.use('/admin', adminRouter.routes(), adminRouter.allowedMethods())
+apiRouter.use('/order', orderRouter.routes(), orderRouter.allowedMethods())
 export default apiRouter

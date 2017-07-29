@@ -3,6 +3,11 @@ import dotenv from 'dotenv'
 dotenv.config({ silent: true })
 
 const conf = convict({
+    debug: {
+        format: [true, false],
+        default: false,
+        env: 'APP_DEBUG'
+    },
     env: {
         doc: 'The application environment.',
         format: ['production', 'development', 'test'],
@@ -32,6 +37,10 @@ const conf = convict({
     logSentryDsn: {
         env: 'LOG_SENTRY_DSN',
         default: ''
+    },
+    jwtSecret: {
+        default: '',
+        env: 'JWT_SECRET'
     },
     masterDb: {
         host: { env: 'DB_MASTER_HOST', default: '127.0.0.1' },

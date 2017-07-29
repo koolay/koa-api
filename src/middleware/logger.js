@@ -10,15 +10,16 @@ const STATUS_COLORS = {
     debug: 'green'
 }
 
-export default function (options) {
+export default options => {
     const transport = options.transport || 'console'
     const level = options.level || 'info'
     const sentryDsn = options.dsn || ''
     const tags = { app: options.name || 'koa-api' }
-    const consoleTransport = new winston.transports.Console({level: level, tags})
+    const consoleTransport = new winston.transports.Console({ level: level, tags })
     const transports = [consoleTransport]
-    if (transport == 'sentry') {
+    if (transport === 'sentry') {
         const sentryTransport = new Sentry({
+            patchGlobal: true,
             level: level,
             dsn: sentryDsn,
             tags: tags
@@ -28,10 +29,11 @@ export default function (options) {
     const winstonLogger = new winston.Logger({
         transports: transports
     })
-    return async (ctx, next) => {
+    return async(ctx, next) => {
         ctx.logger = winstonLogger
         const start = new Date()
         try {
+            ctx.logger.log('debug', ctx.request.headers)
             await next()
         } catch (e) {
             throw e
@@ -49,8 +51,8 @@ export default function (options) {
 
             if (transport === 'console') {
                 let msg = (chalk.gray(`${ctx.method} ${ctx.originalUrl}`) +
-                   chalk[STATUS_COLORS[logLevel]](` ${ctx.status} `) +
-                   chalk.gray(`${ms}ms`))
+                    chalk[STATUS_COLORS[logLevel]](` ${ctx.status} `) +
+                    chalk.gray(`${ms}ms`))
                 ctx.logger.log(logLevel, msg)
             }
         }

@@ -22,18 +22,20 @@ const loggerOptions = {
     dsn: conf.get('logSentryDsn')
 }
 app
-  .use(requestId())
-  .use(logger(loggerOptions))
-  .use(errorMiddleware())
-  .use(bodyParser())
-  .use(helmet())
-  .use(router())
+    .use(requestId())
+    .use(logger(loggerOptions))
+    .use(errorMiddleware())
+    .use(bodyParser())
+    .use(helmet())
+    .use(router())
 
 // sentry logging
 Raven.config(conf.get('logSentryDsn')).install()
 app.on('error', err => {
     if (conf.get('logTransport') === 'sentry') {
         Raven.captureException(err)
+    } else {
+        console.log(err)
     }
 })
 
