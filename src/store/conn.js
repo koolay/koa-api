@@ -1,22 +1,30 @@
-import mysql from 'mysql2/promise'
 import conf from './../conf'
+let MongoClient = require('mongodb').MongoClient
 
 const masterOptions = conf.get('masterDb')
-const pools = {}
+const mongodbUrl = conf.get('mongodbUrl')
 
-pools['master'] = mysql.createPool({
-    host: masterOptions.host,
-    user: masterOptions.user,
-    password: masterOptions.password,
-    database: masterOptions.database,
-    connectionLimit: masterOptions.connectionLimit
+const master = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: masterOptions.host,
+        port: masterOptions.port,
+        user: masterOptions.user,
+        password: masterOptions.password,
+        database: masterOptions.database,
+        charset: 'utf8mb4'
+    },
+    pool: { min: 0, max: masterOptions.connectionLimit },
+    // 是否打印sql语句. !!生产环境下设置关闭
+    debug: conf.get('debug')
 })
 
+const mongo = async collection => {
+    const _mongo = await MongoClient.connect(mongodbUrl)
+    return _mongo.collection(collection)
+}
+
 export default {
-    get (db) {
-        return pools[db]
-    },
-    get master () {
-        return pools['master']
-    }
+    master,
+    mongo
 }

@@ -66,3 +66,15 @@ $ pm2 start ecosystem.json
 ```
 
 ## 使用drone做持续集成
+
+
+## mongodb 使用
+
+```javascript
+
+  import conn from '../store/conn'
+  // 操作foo collection. 
+  const foo = await conn.mongo('foo')
+  console.log(await foo.insert({userid: 1, username: 'abc'}))
+  
+```
