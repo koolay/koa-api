@@ -1,0 +1,52 @@
+pipeline:
+  build:
+    image: daocloud.io/koolay/node-cn:latest
+    commands:
+      - cnpm install
+      - npm run lint
+
+  sonar-scan:
+    image: daocloud.io/koolay/sonar-scanner:latest
+    environment:
+     - PLUGIN_SONAR_KEY=koa-api:dev
+     - PLUGIN_SONAR_HOST=http://<host>:9000
+     - PLUGIN_SONAR_SOURCES=src
+    commands:
+     - /usr/bin/scanner
+    when:
+      branch: dev-*
+      status: [ success ]
+
+  dev:
+     image: drillster/drone-rsync:latest
+     hosts: [ "xx.xx.xx.xx" ]
+     source: .
+     secrets: [RSYNC_KEY]
+     recursive: true
+     target: /data/www/koa-api
+     key: ${RSYNC_KEY}
+     exclude: [".env", 'node_modules', 'ecosystem.json']
+     user: root
+     when:
+        branch: dev-*
+        status: [ success ]
+        event: [ push, deployment ]
+     script:
+       - pm2 restart koa-api
+
+  test:
+     image: drillster/drone-rsync:latest
+     hosts: [ "xx.xx.xx.xx" ]
+     source: .
+     secrets: [RSYNC_KEY]
+     recursive: true
+     target: /data/www/koa-api
+     key: ${RSYNC_KEY}
+     exclude: [".env", 'node_modules', 'ecosystem.json']
+     user: root
+     when:
+        branch: testing-*
+        status: [ success ]
+        event: [ push, deployment ]
+     script:
+       - pm2 restart koa-api
