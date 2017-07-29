@@ -63,3 +63,5 @@ $ pm2 startup
 $ pm2 start ecosystem.json
 
 ```
+
+## 使用drone做持续集成
