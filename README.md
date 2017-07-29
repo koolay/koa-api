@@ -33,10 +33,11 @@ koa2 api项目模板, 包含标准的配置,路由,异常处理项目结构等.
 
 - [Koa](https://github.com/koajs/koa) Well, duh.
 - [Koa Router](https://github.com/alexmingoia/koa-router) For routing and all.
-- [node-mysql2](https://github.com/sidorares/node-mysql2) fast node-mysql compatible mysql driver for node.js
+- [knex](https://github.com/tgriesser/knex) A query builder for PostgreSQL, MySQL and SQLite3, designed to be flexible, portable, and fun to use  
 - [Debug](https://github.com/visionmedia/debug) Debug messages in the development environment.
 - [Convict](https://github.com/mozilla/node-convict) Configuration management.
 - [dotenv](https://github.com/motdotla/dotenv)
+- [Joi](https://github.com/hapijs/joi) Object schema validation
 - [winston](https://github.com/winstonjs/winston) a multi-transport async logging library.
 - [Ava](https://github.com/avajs/ava) For unit tests.
 - [Boom](https://github.com/hapijs/boom) HTTP Errors.
