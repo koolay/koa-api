@@ -27,7 +27,7 @@ const handler = async(ctx, next) => {
             for (let i = 0, len = error.details.length; i < len; i++) {
                 errors.push(error.details[i].message)
             }
-            ctx.body = errors
+	    ctx.body = { code: 400, msg: errors[0] } 
         } else {
             throw error
         }
